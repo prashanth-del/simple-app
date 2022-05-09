@@ -26,8 +26,8 @@ pipeline{
                         nexusUrl: '44.203.76.86:8081',
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        repository: "${mavenPom.version}.war",
-                        version: '1.0.0'
+                        repository: 'HelloWorld-Release',
+                        version: "${mavenPom.version}"
 
 
                         }
