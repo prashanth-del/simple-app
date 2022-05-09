@@ -14,7 +14,23 @@ pipeline{
               }
               stage('Upload War to Nexus'){
                   steps{
-                        nexusArtifactUploader artifacts: [[artifactId: 'simple-app', classifier: '', file: 'target/simple-app-1.0.0.war', type: 'war']], credentialsId: 'nexus3', groupId: 'in.javahome', nexusUrl: '44.203.76.86:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'HelloWorld-Release', version: '1.0.0'
+                        script{
+                        def mavenPom = readMavenPom file: 'pom.xml'
+                        nexusArtifactUploader artifacts: [
+                        [
+                        artifactId: 'simple-app',
+                        classifier: '',
+                        file: "target/simple-app-${mavenPom.version}.war", type: 'war']],
+                        credentialsId: 'nexus3',
+                        groupId: 'in.javahome',
+                        nexusUrl: '44.203.76.86:8081',
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        repository: "${mavenPom.version}.war",
+                        version: '1.0.0'
+
+
+                        }
                   }
           }
     }
